@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>统计</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/Public/css/font.css">
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/Public/lib/layui/css/layui.css" >
+    <script src="/Public/lib/layui/layui.js" charset="utf-8"></script>
+
+    <script src="/Public/js/echarts.js"></script>
+    <!--<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>-->
+</head>
+<body class="layui-fluid">
+
+    <form class="layui-form layui-container" action="" method="get">
+        <div class="layui-row">
+
+            <!---->
+            <div class=" layui-col-xs6 layui-col-sm6 layui-col-md6 layui-form-item">
+                <label class="layui-form-label">页面</label>
+                <div class="layui-input-block">
+                    <select name="page_no" lay-verify="required">
+                        <option value=""></option>
+                        {% for item in select.page_list %}
+                            {% if post.page_no == item.page_no %}
+                             <option value="{{ item.page_no }}" selected>{{ item.name }}</option>
+                            {% else %}
+                            <option value="{{ item.page_no }}" >{{ item.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+
+                    </select>
+                    <div class="layui-unselect layui-form-select"><div class="layui-select-title">
+                        <input type="text" placeholder="请选择" value="" readonly="" class="layui-input layui-unselect" ><i class="layui-edge"></i></div>
+                    <dl class="layui-anim layui-anim-upbit" style=""><dd lay-value="" class="layui-select-tips">请选择</dd>
+                        {% for item in select.page_list %}
+                        {% if post.page_no == item.page_no %}
+                        <dd lay-value="{{ item.page_no }}" class="layui-this">{{ item.name }}</dd>
+                         {% else  %}
+                        <dd lay-value="{{ item.page_no }}" >{{ item.name }}</dd>
+                        {% endif %}
+                        {% endfor %}
+                    </dl>
+                    </div> </div>
+
+            </div>
+        <div class="layui-col-xs6 layui-col-sm6 layui-col-md6 layui-form-item">
+            <label class=" layui-form-label">动作</label>
+            <div class="layui-input-block">
+
+                <select name="action_no" lay-verify="required">
+                    <option value=""></option>
+                    {% for item in select.action_list %}
+                    {% if post.action_no == item.action_no %}
+                    <option value="{{ item.action_no }}" selected>{{ item.name }}</option>
+                    {% else %}
+                    <option value="{{ item.action_no }}" >{{ item.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+
+                </select>
+                <div class="layui-unselect layui-form-select"><div class="layui-select-title"><input type="text" placeholder="请选择" value="{{post.action_no}}" readonly="" class="layui-input layui-unselect"><i class="layui-edge"></i></div><dl class="layui-anim layui-anim-upbit" style="">
+                    <dd lay-value="" class="layui-select-tips">请选择</dd>
+                    {% for item in select.action_list %}
+                    {% if post.action_no == item.action_no %}
+                    <dd lay-value="{{ item.action_no }}" class="layui-this">{{ item.name }}</dd>
+                    {% else  %}
+                    <dd lay-value="{{ item.action_no }}" >{{ item.name }}</dd>
+                    {% endif %}
+                    {% endfor %}
+                </dl></div>
+            </div>
+        </div>
+        <div class="layui-col-xs6 layui-col-sm6 layui-col-md6 layui-form-item">
+            <label class=" layui-form-label">埋点</label>
+            <div class="layui-input-block">
+                <select name="point_no" lay-verify="required">
+                    <option value=""></option>
+                    {% for item in select.point_list %}
+                    {% if post.point_no == item.point_no %}
+                    <option value="{{ item.point_no }}" selected>{{ item.name }}</option>
+                    {% else %}
+                    <option value="{{ item.point_no }}" >{{ item.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select><div class="layui-unselect layui-form-select"><div class="layui-select-title"><input type="text" placeholder="请选择" value="" readonly="" class="layui-input layui-unselect"><i class="layui-edge"></i></div>
+                <dl class="layui-anim layui-anim-upbit" style="">
+                    {% for item in selec.point_listt %}
+                    {% if post.point_no == item.point_no %}
+                    <dd lay-value="{{ item.point_no }}" class="layui-this">{{ item.name }}</dd>
+                    {% else  %}
+                    <dd lay-value="{{ item.point_no }}" >{{ item.name }}</dd>
+                    {% endif %}
+                    {% endfor %}
+                </dl></div>
+            </div>
+        </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md6 layui-form-item">
+                <label class="layui-form-label">开始时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="start_time" id="start_time" value="{{post.start_time}}" readonly required="" lay-verify="required" placeholder="请输入时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-xs6 layui-col-sm6 layui-col-md6 layui-form-item">
+                <label class="layui-form-label">结束时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="end_time" id="end_time" value="{{post.end_time}}" readonly required="" lay-verify="required" placeholder="请输入时间" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formSearch">查询</button>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+<div>
+
+</div>
+
+    <div class="layui-row">
+        <div id="contianer1" class="layui-col-xs6 layui-col-sm6 layui-col-md6" style="height: 450px"></div>
+        <div id="contianer2" class="layui-col-xs6 layui-col-sm6 layui-col-md6" style="height: 450px"></div>
+
+    </div>
+</body>
+
+<script type="text/javascript">
+
+//Demo
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formSearch)', function(data){
+//            layer.msg(JSON.stringify(data.field));
+            form.submit();
+            return false;
+        });
+    });
+layui.use('laydate', function(){
+    var laydate = layui.laydate;
+
+    //执行一个laydate实例
+    laydate.render({
+        elem: '#start_time',//指定元素
+        type: 'datetime' //指定元素
+    });
+    laydate.render({
+        elem: '#end_time', //指定元素
+        type: 'datetime'
+    });
+});
+function escape2Html(str) {
+    var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"'};
+    return str.replace(/&(lt|gt|nbsp|amp|quot);/ig,function(all,t){return arrEntities[t];});
+}
+    $(document).ready(function(){
+        // 图表使用-------------------
+        // 使用
+        var error = "{{data.error}}";
+        if(error)
+        {
+            layui.use('layer', function(){
+                var layer = layui.layer;
+
+                layer.msg(error);
+            });
+           return false;
+        }
+        var xAxis = JSON.parse(escape2Html("{{data.xAxis|json_encode}}"));
+        var yAxis1 = JSON.parse(escape2Html("{{data.yAxis1|json_encode}}"));
+        var yCountsValues = JSON.parse(escape2Html("{{data.yCountsValues|json_encode}}"));
+        var yDurationValues = JSON.parse(escape2Html("{{data.yDurationValues|json_encode}}"));
+
+        var myChart = echarts.init(document.getElementById('contianer1'));
+        var myChart2 = echarts.init(document.getElementById('contianer2'));
+
+        option1 = {
+            title : {
+                text: '点击数据'
+//                subtext: '统计数据'
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['次数']
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            calculable : true,
+
+            xAxis : [
+                {
+                    'name':'时间',
+                    type : 'category',
+                    boundaryGap : false,
+                    data : xAxis
+                }
+            ],
+
+            yAxis : [
+                {
+                    'name':'次数',
+                    type : 'value',
+                    axisLabel : {
+                        formatter: '{value}'
+                    }
+                }
+            ],
+            series : [
+                {
+                    name:'次数',
+                    type:'line',
+                    data:yCountsValues,
+
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
+                        ]
+                    },
+                    markLine : {
+                        data : [
+                            {type : 'average', name: '平均值'}
+                        ]
+                    }
+                }
+
+            ]
+        };
+
+// 过渡---------------------
+//        myChart.showLoading({
+//            text: '正在努力的读取数据中...'   //loading话术
+//        });
+//        myChart.hideLoading();
+        // 为echarts对象加载数据
+        myChart.setOption(option1);
+        option2 = {
+            title : {
+                text: '游戏时长数据'
+//                subtext: '统计数据'
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+
+                data:['时长']
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    'name':'时间',
+                    type : 'category',
+                    boundaryGap : false,
+                    data : xAxis
+                }
+            ],
+
+            yAxis : [
+                {
+                    'name':'时长',
+                    type : 'value',
+                    axisLabel : {
+                        formatter: '{value}'
+                    }
+                }
+            ],
+
+            series : [
+                {
+                    name:'时长',
+                    type:'line',
+                    data:yDurationValues,
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
+                        ]
+                    },
+                    itemStyle : {
+                        normal : {
+                            lineStyle:{
+                                color:'#00FF00'
+                            }
+                        }
+                    },
+                    markLine : {
+                        data : [
+                            {type : 'average', name: '平均值'}
+                        ]
+                    }
+                }
+
+            ]
+        };
+        myChart2.setOption(option2);
+        // 图表清空-------------------
+//                    myChart.clear();
+
+// 图表释放-------------------
+//                    myChart.dispose();
+
+    });
+</script>
+</html>
